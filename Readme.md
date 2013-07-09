@@ -8,7 +8,7 @@ The processing time depends on your internet access speed, as it has to fetch al
 Evernote can then import (File->Import…) the created notebook.
 
 ## Anything special?
-Next to Python (>2.7), you might have to install BeautifulSoup and PIL. This can be done with easy_install, eg:
+Next to Python (>=2.7), you might have to install BeautifulSoup and PIL. This can be done with easy_install, eg:
 sudo easy_install beautifulsoup
 sudo easy_install pil
 
