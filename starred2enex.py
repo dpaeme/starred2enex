@@ -28,7 +28,7 @@ timeStamp=datetime.datetime.today()
 
 
 # get the options from the command line, and parse them
-argParser=argparse.ArgumentParser(prog="starred.py")
+argParser=argparse.ArgumentParser(prog="starred2enex.py")
 argParser.add_argument("-f","--file",nargs="?",help="specifies the file you want to import. Defaults to 'starred.json'")
 argParser.add_argument("-n","--notebook",nargs="?",help="specifies the Evernote notebook name you want to use. Defaults to 'Starred'")
 argParser.add_argument("-c","--count",nargs="?",help="specifies the number of notes per book. Defaults to 100.")
@@ -161,7 +161,10 @@ for item in jDict["items"]:
 				img.name = 'en-media'
 				img['type'] = 'image/' + str(imageAttrs[imageHash]['type'])
 				img['hash']=imageHash
-				del img['src']		
+				del img['src']
+				# delete the ismap property, it freaks EN out:
+				if img['ismap']:
+					del img['ismap']
 			else:
 				# invalid image type, so we can delete
 				img.extract()
