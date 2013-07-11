@@ -163,8 +163,8 @@ for item in jDict["items"]:
 				img['hash']=imageHash
 				del img['src']
 				# delete the ismap property, it freaks EN out:
-				if img['ismap']:
-					del img['ismap']
+				#if img['ismap']:
+				#	del img['ismap']
 			else:
 				# invalid image type, so we can delete
 				img.extract()
