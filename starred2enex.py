@@ -21,7 +21,7 @@ import imghdr		# to get the mime type
 charEncoding=	"UTF-8"
 fileName	=	"starred.json"
 bookName	=	"Starred"
-limit 		= 	-1
+limit 		= 	100
 verbose		=	True
 timeStamp=datetime.datetime.today()
 
@@ -31,7 +31,7 @@ timeStamp=datetime.datetime.today()
 argParser=argparse.ArgumentParser(prog="starred.py")
 argParser.add_argument("-f","--file",nargs="?",help="specifies the file you want to import. Defaults to 'starred.json'")
 argParser.add_argument("-n","--notebook",nargs="?",help="specifies the Evernote notebook name you want to use. Defaults to 'Starred'")
-argParser.add_argument("-c","--count",nargs="?",help="specifies the number of notes per book. Defaults to unlimited.")
+argParser.add_argument("-c","--count",nargs="?",help="specifies the number of notes per book. Defaults to 100.")
 argParser.add_argument("-v","--verbose",help="Has the script output the titles of the items it's parsing.")
 args=argParser.parse_args()
 
