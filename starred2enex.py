@@ -26,7 +26,6 @@ verbose		=	True
 timeStamp=datetime.datetime.today()
 
 
-
 # get the options from the command line, and parse them
 argParser=argparse.ArgumentParser(prog="starred2enex.py")
 argParser.add_argument("-f","--file",nargs="?",help="specifies the file you want to import. Defaults to 'starred.json'")
@@ -132,9 +131,13 @@ for item in jDict["items"]:
 	# image processing
 	for img in soup.findAll('img'):
 		# check if img paths are relative or not, and construct if necessary
-		if not urlparse.urlsplit(img['src'])[1]:
-			# no location in the img src, so we need to create it
-			img['src'] = urlparse.urljoin(noteUrl,img['src'])
+		try:
+			if not urlparse.urlsplit(img['src'])[1]:
+				# no location in the img src, so we need to create it
+				img['src'] = urlparse.urljoin(noteUrl,img['src'])
+		except:
+			img.extract()
+			continue
 
 		# download the images, hash and encode, catch the errors
 		try:
@@ -145,8 +148,9 @@ for item in jDict["items"]:
 			img.extract()
 		except ul.HTTPError, e:
 			img.extract()
+			
 		else:
-			# we've fount the image. download/hash/encode/save the attributes
+			# we've found the image. download/hash/encode/save the attributes
 			attributes = {}
 			image = image.read()
 			imageHash	=	hashlib.md5(image).hexdigest()
@@ -161,10 +165,14 @@ for item in jDict["items"]:
 				img.name = 'en-media'
 				img['type'] = 'image/' + str(imageAttrs[imageHash]['type'])
 				img['hash']=imageHash
-				del img['src']
-				# delete the ismap property, it freaks EN out:
-				#if img['ismap']:
-				#	del img['ismap']
+				try: 
+					del img['src']
+				except:
+					print ""
+				try:
+					del img['ismap']
+				except:
+					print ""	
 			else:
 				# invalid image type, so we can delete
 				img.extract()
